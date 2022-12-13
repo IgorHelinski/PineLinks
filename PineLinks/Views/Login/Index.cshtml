@@ -1,0 +1,83 @@
+﻿@{
+    ViewBag.Title = "Login Page";
+
+}
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fredoka+One">
+
+<div>
+    <center>
+        <form id="Register" asp-action="CreateAccount" asp-controller="Register" method="post">
+            <div class="card border-dark mb-3" style="max-width: 25rem;">
+                <div class="card-header">
+                    <h2>Login</h2>
+                </div>
+
+                <div style="margin:2rem">
+                   
+                </div>
+            </div>
+        </form>
+
+        <div>
+            @if (ViewData["LoginDouble"] != null)
+            {
+                <br />
+                <center>
+                    <h2>Login, Email or name is already taken, try something else or log in to your existing account</h2>
+                </center>
+            }
+        </div>
+
+        <div>
+            @if (ViewData["Success"] != null)
+            {
+                <br />
+                <center>
+                    <h2>Nice !!!, account created succesfully</h2>
+                </center>
+            }
+            else
+            {
+                if (ViewData["Failed"] != null)
+                {
+                    <br />
+                    <center>
+                        <h2>Dang it !!!, failed to create account, try again</h2>
+                    </center>
+                }
+            }
+        </div>
+
+    </center>
+</div>
+
+<style>
+    body {
+        background-color: #e5f9e0;
+    }
+
+    label {
+        font-family: 'Fredoka One';
+    }
+
+    h2 {
+        font-family: 'Fredoka One';
+    }
+
+    p {
+        font-family: 'Fredoka One';
+    }
+
+    a {
+        font-family: 'Fredoka One';
+    }
+
+    button {
+        font-family: 'Fredoka One';
+    }
+
+    input {
+        font-family: 'Fredoka One';
+    }
+</style>

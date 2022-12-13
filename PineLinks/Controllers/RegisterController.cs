@@ -25,7 +25,7 @@ namespace PineLinks.Controllers
             con.ConnectionString = this.Configuration.GetConnectionString("ConString");
         }
 
-        public IActionResult Register()
+        public IActionResult Index()
         {
             return View();
         }
@@ -76,20 +76,20 @@ namespace PineLinks.Controllers
                 {
                     //Success
                     ViewData["Success"] = "success";
-                    return View("Register");
+                    return View("Index");
                 }
                 else
                 {
                     //Failed
                     ViewData["Failed"] = "failed";
-                    return View("Register");
+                    return View("Index");
                 }
             }
             else
             {
                 //nie moze zarejestrowac
                 ViewData["LoginDouble"] = "double";
-                return View("Register");
+                return View("Index");
             }
 
         }
