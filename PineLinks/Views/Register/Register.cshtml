@@ -1,4 +1,5 @@
-﻿@{
+﻿@model PineLinks.Models.RegisterModel;
+@{
     ViewBag.Title = "Register Page";
     
 }
@@ -7,6 +8,7 @@
 
 <div>
     <center>
+        <form id="Register" asp-action="CreateAccount" asp-controller="Register" method="post">
         <div class="card border-dark mb-3" style="max-width: 25rem;">
             <div class="card-header">
                 <h2>Register</h2>
@@ -14,28 +16,67 @@
             
             <div style="margin:2rem">
                 <div class="form-group">
-                    <label class="col-form-label mt-4" for="inputDefault">Login</label>
-                    <input type="text" class="form-control" placeholder="Login" id="inputDefault">
+                     <label asp-for="Login" class="control-label">Login</label>
+                     <input asp-for="Login" class="form-control" placeholder="Login" type="text" />
+                     <span asp-validation-for="Login" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label class="col-form-label mt-4" for="inputDefault">Password</label>
-                    <input type="password" class="form-control" placeholder="Password" id="inputDefault">
+                    <label asp-for="Password" class="control-label">Password</label>
+					<input asp-for="Password" class="form-control" placeholder="Password" type="password" />
+					<span asp-validation-for="Password" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label class="col-form-label mt-4" for="inputDefault">Confirm Password</label>
-                    <input type="password" class="form-control" placeholder="Confirm Password" id="inputDefault">
+                     <label asp-for="ConfirmPassword" class="control-label">Confirm Password</label>
+                     <input asp-for="ConfirmPassword" class="form-control" placeholder="Confirm Password" type="password" />
+                     <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label class="col-form-label mt-4" for="inputDefault">Name</label>
-                    <input type="text" class="form-control" placeholder="Name" id="inputDefault">
+                        <label asp-for="Name" class="control-label">Name</label>
+                        <input asp-for="Name" class="form-control" placeholder="Name" type="text" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label class="col-form-label mt-4" for="inputDefault">Email</label>
-                    <input type="email" class="form-control" placeholder="Email" id="inputDefault">
+                    <label asp-for="Email" class="control-label">Email</label>
+                    <input asp-for="Email" class="form-control" placeholder="Email" type="email" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
-                <button type="button" class="btn btn-dark" style="margin-top:20px">Create Account</button>
+                    <div class="row">
+                        <div class="form-group col-md-12 text-center mt-md-1">
+                            <input id="makeit" type="submit" value="Create Account" class="btn btn-dark" style="margin-top:20px"/>
+                        </div>
+                    </div>
             </div>
         </div>
+        </form>
+
+        <div>
+            @if (ViewData["LoginDouble"] != null)
+            {
+                <br />
+                <center>
+                    <h2>Login, Email or name is already taken, try something else or log in to your existing account</h2>
+                </center>
+            }
+        </div>
+
+        <div>
+            @if (ViewData["Success"] != null)
+            {
+                <br />
+                <center>
+                    <h2>Nice !!!, account created succesfully</h2>
+                </center>
+            }else{
+                if(ViewData["Failed"] != null)
+                {
+                    <br />
+                    <center>
+                        <h2>Dang it !!!, failed to create account, try again</h2>
+                    </center>
+                }
+            }
+        </div>
+
     </center>
 </div>
 
@@ -56,6 +97,9 @@
         font-family: 'Fredoka One';
     }
     button{
+        font-family: 'Fredoka One';
+    }
+    input{
         font-family: 'Fredoka One';
     }
 </style>
