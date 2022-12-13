@@ -1,4 +1,5 @@
-﻿@{
+﻿@model PineLinks.Models.LoginModel;
+@{
     ViewBag.Title = "Login Page";
 
 }
@@ -7,14 +8,29 @@
 
 <div>
     <center>
-        <form id="Register" asp-action="CreateAccount" asp-controller="Register" method="post">
+        <form id="Login" asp-action="Login" asp-controller="Login" method="post">
             <div class="card border-dark mb-3" style="max-width: 25rem;">
                 <div class="card-header">
                     <h2>Login</h2>
                 </div>
 
                 <div style="margin:2rem">
-                   
+                    <div class="form-group">
+                        <label asp-for="Login" class="control-label">Login</label>
+                        <input asp-for="Login" class="form-control" placeholder="Login" type="text" />
+                        <span asp-validation-for="Login" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password" class="control-label">Password</label>
+                        <input asp-for="Password" class="form-control" placeholder="Password" type="password" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-12 text-center mt-md-1">
+                            <input id="makeit" type="submit" value="Login" class="btn btn-dark" style="margin-top:20px" />
+                        </div>
+                    </div>
                 </div>
             </div>
         </form>

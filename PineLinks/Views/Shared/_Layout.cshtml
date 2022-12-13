@@ -19,14 +19,31 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <div style="display:flex">
+                                <center>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Your link tree</a>
+                                </center>
+
+                                <center>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Logout">Logout</a>
+                                </center>
+                            </div>
+                        }
+                        else
+                        {
+                           
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Index">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Register" asp-action="Index">Register</a>
+                            </li>  
+                        }
+                        
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Register" asp-action="Index">Register</a>
                         </li>
                     </ul>
                 </div>
