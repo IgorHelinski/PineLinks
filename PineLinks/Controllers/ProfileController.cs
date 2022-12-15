@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using PineLinks.Models;
 using System.Data.SqlClient;
 
 namespace PineLinks.Controllers
@@ -20,7 +21,7 @@ namespace PineLinks.Controllers
             con.ConnectionString = this.Configuration.GetConnectionString("ConString");
         }
 
-        public IActionResult Index(string id)
+        public IActionResult Index(string id, ProfileModel prof)
         {
             //check if there is a user (id is the name of user)
             connectionString();
@@ -31,8 +32,11 @@ namespace PineLinks.Controllers
             if (dr.Read())
             {
                 //found user
+                prof.ProfileName = dr["UserName"].ToString();
+                prof.ProfileEmail = dr["UserEmail"].ToString();
+
                 con.Close();
-                return View();
+                return View(prof);
             }
             else
             {
