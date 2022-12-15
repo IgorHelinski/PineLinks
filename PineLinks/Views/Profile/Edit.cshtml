@@ -50,7 +50,7 @@
                         </td>
                         <td>
                             @Html.ActionLink("Edit Link", "EditLink", "Link", new {  id=item.OwnerName  })
-                            @Html.ActionLink("Delete Link", "DeleteLink","Link", new {  id=item.OwnerName  })
+                            @Html.ActionLink("Delete Link", "DeleteLink","Link", new {  id=item.OwnerName+"!"+item.LinkId  })
                         </td>
                     </tr>
                 }
