@@ -1,26 +1,15 @@
 ﻿@model IEnumerable<PineLinks.Models.LinkModel>
 @{
-    ViewBag.Title = "Profile Page";
+    ViewBag.Title = "Edit Profile Page";
 
 }
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fredoka+One">
 
 <div>
-    @if (User.Identity.Name == ViewData["ProfileUserName"].ToString())
-    {
-        <center>
-            <a class="btn btn-danger" asp-action="Edit" asp-controller="Profile" asp-route-id="@ViewData["ProfileUserName"].ToString()">Edit your profile</a>
-        </center>
-    }else{
-
-    }
-</div>
-
-<div>
     <center>
-        <h1>This is @ViewData["ProfileUserName"]'s link tree</h1>
-
+        <h1>This is edit page for @ViewData["ProfileUserName"]'s link tree</h1>
+        <a class="btn btn-danger" asp-action="AddLink" asp-controller="Link" asp-route-id="@ViewData["ProfileUserName"].ToString()">Create new link !</a>
 
         <table class="table">
             <thead>
@@ -37,6 +26,9 @@
                     </th>
                     <th>
                         <p>Link Url</p>
+                    </th>
+                    <th>
+                        <p>Edit Settings</p>
                     </th>
                 </tr>
             </thead>
@@ -55,6 +47,10 @@
                         </td>
                         <td>
                             <a href="@item.LinkUrl">@item.LinkUrl</a>
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit Link", "EditLink", "Link", new {  id=item.OwnerName  })
+                            @Html.ActionLink("Delete Link", "DeleteLink","Link", new {  id=item.OwnerName  })
                         </td>
                     </tr>
                 }

@@ -81,7 +81,57 @@ namespace PineLinks.Controllers
 
         public IActionResult Edit(string id)
         {
-            return View();
+            Links.Clear();
+            //check if there is a user (id is the name of user)
+            connectionString();
+            con.Open();
+            com.Connection = con;
+            com.CommandText = "select * from dbo.Users where UserName='" + id + "'";
+            dr = com.ExecuteReader();
+            if (dr.Read())
+            {
+                //found user
+                ViewData["ProfileUserName"] = dr["UserName"].ToString();
+                con.Close();
+
+                connectionString();
+                con.Open();
+                com.Connection = con;
+                com.CommandText = "select * from dbo.Links where OwnerName='" + id + "'";
+                dr = com.ExecuteReader();
+                if (dr.Read())
+                {
+                    Links.Add(new LinkModel
+                    {
+                        LinkId = Convert.ToInt32(dr["LinkId"]),
+                        OwnerName = dr["OwnerName"].ToString(),
+                        LinkLabel = dr["LinkLabel"].ToString(),
+                        LinkUrl = dr["LinkUrl"].ToString()
+                    });
+
+                    while (dr.Read())
+                    {
+                        Links.Add(new LinkModel
+                        {
+                            LinkId = Convert.ToInt32(dr["LinkId"]),
+                            OwnerName = dr["OwnerName"].ToString(),
+                            LinkLabel = dr["LinkLabel"].ToString(),
+                            LinkUrl = dr["LinkUrl"].ToString()
+                        });
+                    }
+
+                    return View(Links);
+                }
+                else
+                {
+                    return View(Links);
+                }
+            }
+            else
+            {
+                //user not found
+                return View("UserNotFound");
+            }
         }
     }
 }
