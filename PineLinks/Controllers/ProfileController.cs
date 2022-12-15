@@ -7,6 +7,9 @@ namespace PineLinks.Controllers
 {
     public class ProfileController : Controller
     {
+        public static IList<LinkModel> Links = new List<LinkModel>();
+        
+
         SqlConnection con = new SqlConnection();
         SqlCommand com = new SqlCommand();
         SqlDataReader dr;
@@ -21,8 +24,9 @@ namespace PineLinks.Controllers
             con.ConnectionString = this.Configuration.GetConnectionString("ConString");
         }
 
-        public IActionResult Index(string id, ProfileModel prof)
+        public IActionResult Index(string id)
         {
+            Links.Clear();
             //check if there is a user (id is the name of user)
             connectionString();
             con.Open();
@@ -32,19 +36,52 @@ namespace PineLinks.Controllers
             if (dr.Read())
             {
                 //found user
-                prof.ProfileName = dr["UserName"].ToString();
-                prof.ProfileEmail = dr["UserEmail"].ToString();
-
+                ViewData["ProfileUserName"] = dr["UserName"].ToString();
                 con.Close();
-                return View(prof);
+
+                connectionString();
+                con.Open();
+                com.Connection = con;
+                com.CommandText = "select * from dbo.Links where OwnerName='" + id + "'";
+                dr = com.ExecuteReader();
+                if (dr.Read())
+                {
+                    Links.Add(new LinkModel
+                    {
+                        LinkId = Convert.ToInt32(dr["LinkId"]),
+                        OwnerName = dr["OwnerName"].ToString(),
+                        LinkLabel = dr["LinkLabel"].ToString(),
+                        LinkUrl = dr["LinkUrl"].ToString()
+                    });
+
+                    while (dr.Read())
+                    {
+                        Links.Add(new LinkModel
+                        {
+                            LinkId = Convert.ToInt32(dr["LinkId"]),
+                            OwnerName = dr["OwnerName"].ToString(),
+                            LinkLabel = dr["LinkLabel"].ToString(),
+                            LinkUrl = dr["LinkUrl"].ToString()
+                        });
+                    }
+
+                    return View(Links);
+                }
+                else
+                {
+                    return View(Links);
+                }
             }
             else
             {
                 //user not found
                 return View("UserNotFound");
             }
+        }
 
-                
+        public IActionResult Edit(string id)
+        {
+            return View();
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿@model PineLinks.Models.ProfileModel;
+﻿@model IEnumerable<PineLinks.Models.LinkModel>
 @{
     ViewBag.Title = "Profile Page";
 
@@ -7,8 +7,60 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fredoka+One">
 
 <div>
+    @if (User.Identity.Name == ViewData["ProfileUserName"].ToString())
+    {
+        <center>
+        <a class="btn btn-danger" asp-action="Index" asp-controller="Home">Edit your profile</a>
+        </center>
+    }else{
+
+    }
+</div>
+
+<div>
     <center>
-        <h1>This is @Model.ProfileName's link tree</h1>
+        <h1>This is @ViewData["ProfileUserName"]'s link tree</h1>
+
+
+        <table class="table">
+            <thead>
+                <tr>
+
+                    <th>
+                        <p>Link Id</p>
+                    </th>
+                    <th>
+                        <p>Owner Name</p>
+                    </th>
+                    <th>
+                        <p>Link Label</p>
+                    </th>
+                    <th>
+                        <p>Link Url</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @item.LinkId
+                        </td>
+                        <td>
+                            @item.OwnerName
+                        </td>
+                        <td>
+                            <p>@item.LinkLabel</p>
+                        </td>
+                        <td>
+                            <a href="@item.LinkUrl">@item.LinkUrl</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
     </center>
 </div>
 
