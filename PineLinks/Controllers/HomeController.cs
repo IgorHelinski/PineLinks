@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using PineLinks.Models;
 using System.Diagnostics;
 using System.Data.SqlClient;
+using System.Reflection;
 
 namespace PineLinks.Controllers
 {
@@ -69,6 +70,29 @@ namespace PineLinks.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult Test()
+        {
+            return View();
+        }
+        public IActionResult Create(UserModel usr)
+        {
+            var img = usr.Image;
+            var fileName = Path.GetFileName(usr.Image.FileName);
+            var contentType = usr.Image.ContentType;
+            string FileName = usr.Image.FileName;
+            GetByteArrayFromImage(usr.Image);
+            return View("Index");
+        }
+
+        private byte[] GetByteArrayFromImage(IFormFile file)
+        {
+            using (var target = new MemoryStream())
+            {
+                file.CopyTo(target);
+                return target.ToArray();
+            }
         }
     }
 }

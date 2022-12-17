@@ -19,10 +19,16 @@
     }
 </div>
 
-<div>
-    <center>
-        <h1>This is @ViewData["ProfileUserName"]'s link tree</h1>
+<center>
+    <h1>This is @ViewData["ProfileUserName"]'s link tree</h1>
 
+
+
+</center>
+
+<div class="border-top">
+    <h1>Links</h1>
+    <center>
          @foreach (var item in Model)
          {
             <div class="card border-dark mb-3" style="max-width: 20rem;">
@@ -35,9 +41,11 @@
     </center>
 </div>
 
-<footer class="border-top footer">
+<div class="border-top">
     <h1>Notes</h1>
-</footer>
+</div>
+
+
 
 <style>
     body {

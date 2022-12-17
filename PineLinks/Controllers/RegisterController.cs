@@ -61,6 +61,7 @@ namespace PineLinks.Controllers
 
             if (canRegister)
             {
+                
                 connectionString();
                 SqlCommand com = new SqlCommand("usr_AddUser", con);
                 com.CommandType = CommandType.StoredProcedure;
@@ -69,6 +70,7 @@ namespace PineLinks.Controllers
                 com.Parameters.AddWithValue("@UserName", reg.Name);
                 com.Parameters.AddWithValue("@UserEmail", reg.Email);
                 com.Parameters.AddWithValue("@UserRole", "User");
+                com.Parameters.AddWithValue("@UserPfp", " ");
                 con.Open();
                 int i = com.ExecuteNonQuery();
                 con.Close();
