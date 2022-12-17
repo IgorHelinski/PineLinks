@@ -1,6 +1,6 @@
-﻿@{
+﻿@model IEnumerable<PineLinks.Models.UserModel>
+@{
     ViewBag.Title = "Home Page";
-    
 }
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fredoka+One">
@@ -25,13 +25,60 @@
     </div>
 </div>
 
+<center>
+    <div style="padding-top: 2em"> 
+        <h2 style="align-content:center">Search for other people's link trees</h2>
+    </div>
+</center>
+
+<div style="padding-top: 5em">
+    <div>
+        @foreach (var item in Model)
+        {
+            <div style="display: inline-block; margin-left:20px">
+                <div class="card border-dark mb-3" style="max-width: 30rem; min-width:20rem">
+                    <div class="card-header"><h1>@item.Name</h1></div>
+                    <div class="card-body">
+                        <a class="btn btn-secondary" asp-action="Index" asp-controller="Profile" asp-route-id="@item.Name">Check it out !!</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div> 
+</div>
 
 
 <style>
-    body {
-        background-color: #e5f9e0;
-    }
-    a{
-        font-family: 'Fredoka One';
-    }
+    
+     body {
+         background-color: #e5f9e0;
+     }
+
+     label {
+         font-family: 'Fredoka One';
+     }
+
+     h2 {
+         font-family: 'Fredoka One';
+     }
+
+     h1 {
+         font-family: 'Fredoka One';
+     }
+
+     p {
+         font-family: 'Fredoka One';
+     }
+
+     a {
+         font-family: 'Fredoka One';
+     }
+
+     button {
+         font-family: 'Fredoka One';
+     }
+
+     input {
+         font-family: 'Fredoka One';
+     }
 </style>
