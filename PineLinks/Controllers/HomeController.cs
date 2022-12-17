@@ -4,9 +4,21 @@ using PineLinks.Models;
 using System.Diagnostics;
 using System.Data.SqlClient;
 using System.Reflection;
+using Microsoft.AspNetCore.Http;
+using System.Security.Cryptography;
 
 namespace PineLinks.Controllers
 {
+    public static class FormFileExtensions
+    {
+        public static async Task<byte[]> GetBytes(this IFormFile formFile)
+        {
+            await using var memoryStream = new MemoryStream();
+            await formFile.CopyToAsync(memoryStream);
+            return memoryStream.ToArray();
+        }
+    }
+
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -72,19 +84,52 @@ namespace PineLinks.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public IActionResult Test()
+        public IActionResult Test(string cos, UserModel usr)
         {
-            return View();
+            
+            return View(usr);
+
         }
-        public IActionResult Create(UserModel usr)
+        public async Task<string> Create(UserModel usr)
         {
             var img = usr.Image;
             var fileName = Path.GetFileName(usr.Image.FileName);
             var contentType = usr.Image.ContentType;
             string FileName = usr.Image.FileName;
             GetByteArrayFromImage(usr.Image);
-            return View("Index");
+
+            var bytes = await usr.Image.GetBytes();
+            //var bytes = GetBytes(usr.Image);
+            var hexString = Convert.ToBase64String(bytes);
+
+            return hexString;
         }
+
+        public async Task<byte[]> Createe(UserModel usr)
+        {
+            var img = usr.Image;
+            var fileName = Path.GetFileName(usr.Image.FileName);
+            var contentType = usr.Image.ContentType;
+            string FileName = usr.Image.FileName;
+            GetByteArrayFromImage(usr.Image);
+
+            var bytes = await usr.Image.GetBytes();
+            //var bytes = GetBytes(usr.Image);
+            var hexString = Convert.ToBase64String(bytes);
+
+            return bytes;
+        }
+
+        public IActionResult nwm(UserModel usrr)
+        {
+            string prosze = Create(usrr).Result;
+            byte[] bity = Createe(usrr).Result;
+            usrr.test = prosze;
+            usrr.test2 = bity;
+            return View(usrr);
+        }
+
+        
 
         private byte[] GetByteArrayFromImage(IFormFile file)
         {

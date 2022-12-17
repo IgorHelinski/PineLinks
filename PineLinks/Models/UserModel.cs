@@ -18,5 +18,7 @@ namespace PineLinks.Models
         public string Role { get; set; }
         public IFormFile Image { get; set; }
 
+        public string test { get; set; }
+        public byte[] test2 { get; set; }
     }
 }

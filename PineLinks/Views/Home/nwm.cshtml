@@ -1,6 +1,6 @@
 ﻿@model PineLinks.Models.UserModel
 @{
-    ViewBag.Title = "Test Page";
+    ViewBag.Title = "nwm Page";
 }
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fredoka+One">
@@ -15,7 +15,15 @@
     </form>
 </div>
 
+<p>
+    @if(Model.test != null){
+        var base64 = Convert.ToBase64String(Model.test2);
+        var imgsrc = string.Format("data:image/gif;base64,{0}", base64);
+        <img src="@imgsrc">
+    }else{
 
+    }
+</p>
 
 <style>
 
@@ -51,4 +59,3 @@
         font-family: 'Fredoka One';
     }
 </style>
-
