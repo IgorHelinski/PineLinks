@@ -31,6 +31,19 @@
     </div>
 </center>
 
+<div>
+    @foreach (var itemm in Model)
+        {
+        <img src="@itemm.ImageInString">
+        @if (itemm.ImageInBytes != null)
+        {
+            var base64 = Convert.ToBase64String(itemm.ImageInBytes);
+            var imgsrc = string.Format("data:image/gif;base64,{0}", base64);
+            <img src="@itemm.ImageInString">
+        }
+        }
+</div>
+
 <div style="padding-top: 5em">
     <div>
         @foreach (var item in Model)
@@ -40,6 +53,19 @@
                     <div class="card-header"><h1>@item.Name</h1></div>
                     <div class="card-body">
                         <a class="btn btn-secondary" asp-action="Index" asp-controller="Profile" asp-route-id="@item.Name">Check it out !!</a>
+                        @{
+                            byte[] toEncodeAsBytes = System.Text.ASCIIEncoding.ASCII.GetBytes(item.ImageInString);
+                            var base644 = Convert.ToBase64String(toEncodeAsBytes);
+                            var imgsrcc = string.Format("data:image/gif;base64,{0}", base644);
+                        }
+                        <img src="@imgsrcc">
+                        @if(item.ImageInBytes != null){
+                            var base64 = Convert.ToBase64String(item.ImageInBytes);
+                            var imgsrc = string.Format("data:image/gif;base64,{0}", base64);
+                            <img src="@imgsrc">
+                        }
+                           
+                        
                     </div>
                 </div>
             </div>

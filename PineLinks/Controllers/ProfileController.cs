@@ -144,5 +144,10 @@ namespace PineLinks.Controllers
             }
             
         }
+
+        public IActionResult EditPfp()
+        {
+            return View();
+        }
     }
 }

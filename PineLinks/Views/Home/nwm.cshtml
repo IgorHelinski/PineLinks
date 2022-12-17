@@ -9,15 +9,15 @@
     <form asp-action="nwm" enctype="multipart/form-data">
 
         
-        <input asp-for="Image" />
+        <input asp-for="Image"/>
 
         <input type="submit" />
     </form>
 </div>
 
 <p>
-    @if(Model.test != null){
-        var base64 = Convert.ToBase64String(Model.test2);
+    @if(Model.ImageInBytes != null){
+        var base64 = Convert.ToBase64String(Model.ImageInBytes);
         var imgsrc = string.Format("data:image/gif;base64,{0}", base64);
         <img src="@imgsrc">
     }else{

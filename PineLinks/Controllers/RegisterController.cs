@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 
 namespace PineLinks.Controllers
 {
+
     public class RegisterController : Controller
     {
         SqlConnection con = new SqlConnection();
@@ -61,6 +62,15 @@ namespace PineLinks.Controllers
 
             if (canRegister)
             {
+                if(reg.Image != null)
+                {
+                    string literki = GenerateBytes(reg).Result;
+                    reg.ImageInString = literki;
+                }
+                else
+                {
+                    reg.ImageInString = " ";
+                }
                 
                 connectionString();
                 SqlCommand com = new SqlCommand("usr_AddUser", con);
@@ -70,7 +80,7 @@ namespace PineLinks.Controllers
                 com.Parameters.AddWithValue("@UserName", reg.Name);
                 com.Parameters.AddWithValue("@UserEmail", reg.Email);
                 com.Parameters.AddWithValue("@UserRole", "User");
-                com.Parameters.AddWithValue("@UserPfp", " ");
+                com.Parameters.AddWithValue("@UserPfp", reg.ImageInString);
                 con.Open();
                 int i = com.ExecuteNonQuery();
                 con.Close();
@@ -94,6 +104,20 @@ namespace PineLinks.Controllers
                 return View("Index");
             }
 
+        }
+
+        public async Task<string> GenerateBytes(RegisterModel usr)
+        {
+            var bytes = await usr.Image.GetBytes();
+            var bruh = Convert.ToBase64String(bytes);
+            return bruh;
+        }
+
+        public async Task<byte[]> GenerateBytesToDefaulPfp(RegisterModel usr)
+        {
+            var bytes = await usr.Image.GetBytes();
+
+            return bytes;
         }
     }
 }

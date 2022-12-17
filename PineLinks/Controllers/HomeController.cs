@@ -6,6 +6,11 @@ using System.Data.SqlClient;
 using System.Reflection;
 using Microsoft.AspNetCore.Http;
 using System.Security.Cryptography;
+using System.IO;
+using System;
+using System.Text;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
 
 namespace PineLinks.Controllers
 {
@@ -53,23 +58,55 @@ namespace PineLinks.Controllers
             {
                 Users.Add(new UserModel
                 {
-                    Name = dr["UserName"].ToString()
-                });
+                    Name = dr["UserName"].ToString(),
+                    ImageInString = dr["UserPfp"].ToString()
+                    //ImageInBytes = Encoding.ASCII.GetBytes(dr["UserPfp"].ToString())
+                }) ;
 
                 while (dr.Read())
                 {
                     Users.Add(new UserModel
                     {
-                        Name = dr["UserName"].ToString()
+                        Name = dr["UserName"].ToString(),
+                        //ImageInBytes = Encoding.ASCII.GetBytes(dr["UserPfp"].ToString())
+                        ImageInString = dr["UserPfp"].ToString()
                     });
                 }
 
+                
                 return View(Users);
             }
             else
             {
                 return View(Users);
             }
+        }
+
+        public byte[] ObjectToByteArray(object _Object)
+        {
+            try
+            {
+                // create new memory stream
+                System.IO.MemoryStream _MemoryStream = new System.IO.MemoryStream();
+
+                // create new BinaryFormatter
+                System.Runtime.Serialization.Formatters.Binary.BinaryFormatter _BinaryFormatter
+                            = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+
+                // Serializes an object, or graph of connected objects, to the given stream.
+                _BinaryFormatter.Serialize(_MemoryStream, _Object);
+
+                // convert stream to byte array and return
+                return _MemoryStream.ToArray();
+            }
+            catch (Exception _Exception)
+            {
+                // Error
+                Console.WriteLine("Exception caught in process: {0}", _Exception.ToString());
+            }
+
+            // Error occured, return null
+            return null;
         }
 
         [Authorize]
@@ -90,21 +127,7 @@ namespace PineLinks.Controllers
             return View(usr);
 
         }
-        public async Task<string> Create(UserModel usr)
-        {
-            var img = usr.Image;
-            var fileName = Path.GetFileName(usr.Image.FileName);
-            var contentType = usr.Image.ContentType;
-            string FileName = usr.Image.FileName;
-            GetByteArrayFromImage(usr.Image);
-
-            var bytes = await usr.Image.GetBytes();
-            //var bytes = GetBytes(usr.Image);
-            var hexString = Convert.ToBase64String(bytes);
-
-            return hexString;
-        }
-
+        
         public async Task<byte[]> Createe(UserModel usr)
         {
             var img = usr.Image;
@@ -122,10 +145,10 @@ namespace PineLinks.Controllers
 
         public IActionResult nwm(UserModel usrr)
         {
-            string prosze = Create(usrr).Result;
+            
             byte[] bity = Createe(usrr).Result;
-            usrr.test = prosze;
-            usrr.test2 = bity;
+            
+            usrr.ImageInBytes = bity;
             return View(usrr);
         }
 
