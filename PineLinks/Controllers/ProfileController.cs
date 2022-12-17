@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using PineLinks.Models;
 using System.Data.SqlClient;
@@ -79,37 +80,31 @@ namespace PineLinks.Controllers
             }
         }
 
+        [Authorize]
         public IActionResult Edit(string id)
         {
-            Links.Clear();
-            //check if there is a user (id is the name of user)
-            connectionString();
-            con.Open();
-            com.Connection = con;
-            com.CommandText = "select * from dbo.Users where UserName='" + id + "'";
-            dr = com.ExecuteReader();
-            if (dr.Read())
-            {
-                //found user
-                ViewData["ProfileUserName"] = dr["UserName"].ToString();
-                con.Close();
 
+            if(User.Identity.Name == id)
+            {
+                Links.Clear();
+                //check if there is a user (id is the name of user)
                 connectionString();
                 con.Open();
                 com.Connection = con;
-                com.CommandText = "select * from dbo.Links where OwnerName='" + id + "'";
+                com.CommandText = "select * from dbo.Users where UserName='" + id + "'";
                 dr = com.ExecuteReader();
                 if (dr.Read())
                 {
-                    Links.Add(new LinkModel
-                    {
-                        LinkId = Convert.ToInt32(dr["LinkId"]),
-                        OwnerName = dr["OwnerName"].ToString(),
-                        LinkLabel = dr["LinkLabel"].ToString(),
-                        LinkUrl = dr["LinkUrl"].ToString()
-                    });
+                    //found user
+                    ViewData["ProfileUserName"] = dr["UserName"].ToString();
+                    con.Close();
 
-                    while (dr.Read())
+                    connectionString();
+                    con.Open();
+                    com.Connection = con;
+                    com.CommandText = "select * from dbo.Links where OwnerName='" + id + "'";
+                    dr = com.ExecuteReader();
+                    if (dr.Read())
                     {
                         Links.Add(new LinkModel
                         {
@@ -118,20 +113,36 @@ namespace PineLinks.Controllers
                             LinkLabel = dr["LinkLabel"].ToString(),
                             LinkUrl = dr["LinkUrl"].ToString()
                         });
-                    }
 
-                    return View(Links);
+                        while (dr.Read())
+                        {
+                            Links.Add(new LinkModel
+                            {
+                                LinkId = Convert.ToInt32(dr["LinkId"]),
+                                OwnerName = dr["OwnerName"].ToString(),
+                                LinkLabel = dr["LinkLabel"].ToString(),
+                                LinkUrl = dr["LinkUrl"].ToString()
+                            });
+                        }
+
+                        return View(Links);
+                    }
+                    else
+                    {
+                        return View(Links);
+                    }
                 }
                 else
                 {
-                    return View(Links);
+                    //user not found
+                    return View("UserNotFound");
                 }
             }
             else
             {
-                //user not found
-                return View("UserNotFound");
+                return RedirectToAction("Index", "Home");
             }
+            
         }
     }
 }
