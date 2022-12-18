@@ -64,8 +64,8 @@ namespace PineLinks.Controllers
             {
                 if(reg.Image != null)
                 {
-                    string literki = GenerateBytes(reg).Result;
-                    reg.ImageInString = literki;
+                    byte[] bity = GenerateBytes(reg).Result;
+                    reg.ImageInBytes = bity;
                 }
                 else
                 {
@@ -80,7 +80,7 @@ namespace PineLinks.Controllers
                 com.Parameters.AddWithValue("@UserName", reg.Name);
                 com.Parameters.AddWithValue("@UserEmail", reg.Email);
                 com.Parameters.AddWithValue("@UserRole", "User");
-                com.Parameters.AddWithValue("@UserPfp", reg.ImageInString);
+                com.Parameters.AddWithValue("@UserPfp", reg.ImageInBytes);
                 con.Open();
                 int i = com.ExecuteNonQuery();
                 con.Close();
@@ -106,11 +106,11 @@ namespace PineLinks.Controllers
 
         }
 
-        public async Task<string> GenerateBytes(RegisterModel usr)
+        public async Task<byte[]> GenerateBytes(RegisterModel usr)
         {
             var bytes = await usr.Image.GetBytes();
             var bruh = Convert.ToBase64String(bytes);
-            return bruh;
+            return bytes;
         }
 
         public async Task<byte[]> GenerateBytesToDefaulPfp(RegisterModel usr)

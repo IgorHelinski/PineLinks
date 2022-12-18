@@ -59,7 +59,7 @@ namespace PineLinks.Controllers
                 Users.Add(new UserModel
                 {
                     Name = dr["UserName"].ToString(),
-                    ImageInString = dr["UserPfp"].ToString()
+                    ImageInBytes = (byte[])dr["UserPfp"]
                     //ImageInBytes = Encoding.ASCII.GetBytes(dr["UserPfp"].ToString())
                 }) ;
 
@@ -69,7 +69,7 @@ namespace PineLinks.Controllers
                     {
                         Name = dr["UserName"].ToString(),
                         //ImageInBytes = Encoding.ASCII.GetBytes(dr["UserPfp"].ToString())
-                        ImageInString = dr["UserPfp"].ToString()
+                        ImageInBytes = (byte[])dr["UserPfp"]
                     });
                 }
 
