@@ -9,7 +9,7 @@ namespace PineLinks.Controllers
     public class ProfileController : Controller
     {
         public static IList<LinkModel> Links = new List<LinkModel>();
-        
+        public static IList<UserModel> Users = new List<UserModel>();
 
         SqlConnection con = new SqlConnection();
         SqlCommand com = new SqlCommand();
@@ -145,9 +145,42 @@ namespace PineLinks.Controllers
             
         }
 
-        public IActionResult EditPfp()
+        [Authorize]
+        public IActionResult EditPfp(string id, UserModel usr)
         {
-            return View();
+            if (User.Identity.Name == id)
+            {
+                Links.Clear();
+                //check if there is a user (id is the name of user)
+                connectionString();
+                con.Open();
+                com.Connection = con;
+                com.CommandText = "select * from dbo.Users where UserName='" + id + "'";
+                dr = com.ExecuteReader();
+                if (dr.Read())
+                {
+                    //found user
+                    ViewData["ProfileUserName"] = dr["UserName"].ToString();
+                    usr.ImageInBytes = (byte[])dr["UserPfp"];
+                    con.Close();
+
+                    return View(usr);
+                }
+                else
+                {
+                    //user not found
+                    return View("UserNotFound");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        public IActionResult Change(string id)
+        {
+            return RedirectToAction("Index", "Home");
         }
     }
 }

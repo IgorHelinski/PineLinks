@@ -1,0 +1,72 @@
+﻿@model PineLinks.Models.UserModel
+@{
+    ViewBag.Title = "Edit Profile Picture Page";
+
+}
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fredoka+One">
+
+<div>
+    <center>
+        <form id="Pfp" asp-action="Change" asp-controller="Profile" asp-route-id="@ViewData["ProfileUserName"].ToString()" method="post">
+            <div class="card border-dark mb-3" style="max-width: 25rem;">
+                <div class="card-header">
+                    <h2>Change Pfp</h2>
+                </div>
+
+                <div style="margin:2rem">
+                    @if (Model.ImageInBytes.Length > 1)
+                    {
+                        var base64 = Convert.ToBase64String(Model.ImageInBytes);
+                        var imgsrc = string.Format("data:image/gif;base64,{0}", base64);
+                        <img src="@imgsrc" width="150" height="150" style="border-radius:50%; object-fit:cover">
+                    }
+                    else
+                    {
+                        <img src="/Logo1.png" width="150" height="150" style="border-radius:50%; object-fit:cover">
+                    }
+                
+
+                <div class="form-group">
+                    <label for="formFile" class="form-label mt-4">Here upload your picture</label>
+                    <input class="form-control" type="file" id="formFile">
+                </div>
+
+                <div class="form-group col-md-12 text-center mt-md-1">
+                    <input id="makeit" type="submit" value="Change profile picture" class="btn btn-dark" style="margin-top:20px" />
+                </div>
+                </div>
+            </div>
+        </form>
+    </center>
+</div>
+
+<style>
+    body {
+        background-color: #e5f9e0;
+    }
+
+    label {
+        font-family: 'Fredoka One';
+    }
+
+    h2 {
+        font-family: 'Fredoka One';
+    }
+
+    p {
+        font-family: 'Fredoka One';
+    }
+
+    a {
+        font-family: 'Fredoka One';
+    }
+
+    button {
+        font-family: 'Fredoka One';
+    }
+
+    input {
+        font-family: 'Fredoka One';
+    }
+</style>
