@@ -69,7 +69,7 @@ namespace PineLinks.Controllers
                 }
                 else
                 {
-                    reg.ImageInString = " ";
+                    reg.ImageInBytes = null;
                 }
                 
                 connectionString();
@@ -80,7 +80,16 @@ namespace PineLinks.Controllers
                 com.Parameters.AddWithValue("@UserName", reg.Name);
                 com.Parameters.AddWithValue("@UserEmail", reg.Email);
                 com.Parameters.AddWithValue("@UserRole", "User");
-                com.Parameters.AddWithValue("@UserPfp", reg.ImageInBytes);
+                if(reg.Image != null)
+                {
+                    com.Parameters.AddWithValue("@UserPfp", reg.ImageInBytes);
+                }
+                else
+                {
+                    byte[] ba = new byte[1] { 1 };
+                    com.Parameters.AddWithValue("@UserPfp", ba);
+                }
+                
                 con.Open();
                 int i = com.ExecuteNonQuery();
                 con.Close();

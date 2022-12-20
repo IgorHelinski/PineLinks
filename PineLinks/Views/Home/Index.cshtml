@@ -52,15 +52,20 @@
                 <div class="card border-dark mb-3" style="max-width: 30rem; min-width:20rem">
                     <div class="card-header"><h1>@item.Name</h1></div>
                     <div class="card-body">
-                        <a class="btn btn-secondary" asp-action="Index" asp-controller="Profile" asp-route-id="@item.Name">Check it out !!</a>
-                        
-                        @if(item.ImageInBytes != null){
+                        <center>
+
+                        <a class="btn btn-secondary" asp-action="Index" asp-controller="Profile" asp-route-id="@item.Name" style="margin-bottom:20px">Check it out !!</a>
+                        <br>
+                        @if(item.ImageInBytes.Length > 1){
                             var base64 = Convert.ToBase64String(item.ImageInBytes);
                             var imgsrc = string.Format("data:image/gif;base64,{0}", base64);
-                            <img src="@imgsrc">
+                            <img src="@imgsrc" width="150" height="150" style="border-radius:50%; object-fit:cover">
+                        }else
+                        {
+                            <img src="/Logo1.png" width="150" height="150" style="border-radius:50%; object-fit:cover">
                         }
-                           
-                        
+
+                        </center>
                     </div>
                 </div>
             </div>

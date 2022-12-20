@@ -73,7 +73,6 @@ namespace PineLinks.Controllers
                     });
                 }
 
-                
                 return View(Users);
             }
             else
