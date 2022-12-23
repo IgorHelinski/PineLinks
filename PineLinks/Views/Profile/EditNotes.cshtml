@@ -1,0 +1,60 @@
+﻿@model PineLinks.Models.UserModel;
+@{
+    ViewBag.Title = "Edit Notes Page";
+}
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fredoka+One">
+
+<div>
+    <center>
+        <form id="Register" asp-action="Change" asp-controller="Profile" method="post" enctype="multipart/form-data">
+            <div class="card border-dark mb-3" style="max-width: 25rem;">
+                <div class="card-header">
+                    <h2>Edit Notes</h2>
+                </div>
+
+                <div style="margin:2rem">
+
+                    <div class="form-group">
+                        
+                        <textarea class="form-control" id="exampleTextarea" rows="3" style="height: 167px;"></textarea>
+                    </div>
+
+                    <div class="form-group col-md-12 text-center mt-md-1">
+                        <input id="makeit" type="submit" value="Edit Notes" class="btn btn-dark" style="margin-top:20px" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </center>
+</div>
+
+<style>
+    body {
+        background-color: #e5f9e0;
+    }
+
+    label {
+        font-family: 'Fredoka One';
+    }
+
+    h2 {
+        font-family: 'Fredoka One';
+    }
+
+    p {
+        font-family: 'Fredoka One';
+    }
+
+    a {
+        font-family: 'Fredoka One';
+    }
+
+    button {
+        font-family: 'Fredoka One';
+    }
+
+    input {
+        font-family: 'Fredoka One';
+    }
+</style>

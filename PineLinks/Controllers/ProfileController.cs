@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using PineLinks.Models;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace PineLinks.Controllers
@@ -23,6 +24,12 @@ namespace PineLinks.Controllers
         void connectionString()
         {
             con.ConnectionString = this.Configuration.GetConnectionString("ConString");
+        }
+        public async Task<byte[]> GenerateBytes(UserModel usr)
+        {
+            var bytes = await usr.Image.GetBytes();
+            var bruh = Convert.ToBase64String(bytes);
+            return bytes;
         }
 
         public IActionResult Index(string id)
@@ -178,9 +185,29 @@ namespace PineLinks.Controllers
             }
         }
 
-        public IActionResult Change(string id)
+        public IActionResult Change(UserModel usr)
         {
+            byte[] bity = GenerateBytes(usr).Result;
+            usr.ImageInBytes = bity;
+
+            connectionString();
+            SqlCommand com = new SqlCommand("usr_ChangePfp", con);
+            com.CommandType = CommandType.StoredProcedure;
+            com.Parameters.AddWithValue("@UserPfp", usr.ImageInBytes);
+            com.Parameters.AddWithValue("@UserName", User.Identity.Name);
+            con.Open();
+            int i = com.ExecuteNonQuery();
+            con.Close();
+
             return RedirectToAction("Index", "Home");
+        }
+
+
+        public IActionResult EditNotes()
+        {
+            return View();
         }
     }
 }
+    
+

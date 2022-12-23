@@ -9,9 +9,12 @@
 <div>
     <center>
         <h1>This is edit page for @ViewData["ProfileUserName"]'s link tree</h1>
-        <a class="btn btn-danger" asp-action="AddLink" asp-controller="Link" asp-route-id="@ViewData["ProfileUserName"].ToString()">Create new link !</a>
-        <a class="btn btn-danger" asp-action="EditPfp" asp-controller="Profile" asp-route-id="@ViewData["ProfileUserName"].ToString()">Change your profile picture</a>
-        <table class="table">
+        <div style="margin-top:3em">
+            <a class="btn btn-danger" asp-action="AddLink" asp-controller="Link" asp-route-id="@ViewData["ProfileUserName"].ToString()">Create new link !</a>
+            <a class="btn btn-info" asp-action="EditPfp" asp-controller="Profile" asp-route-id="@ViewData["ProfileUserName"].ToString()">Change your profile picture !</a>
+        </div>
+        
+        <table class="table" style="margin-top:5em">
             <thead>
                 <tr>
 
