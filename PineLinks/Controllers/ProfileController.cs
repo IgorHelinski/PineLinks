@@ -32,7 +32,7 @@ namespace PineLinks.Controllers
             return bytes;
         }
 
-        public IActionResult Index(string id)
+        public IActionResult View(string id)
         {
             Links.Clear();
             //check if there is a user (id is the name of user)
@@ -153,7 +153,7 @@ namespace PineLinks.Controllers
         }
 
         [Authorize]
-        public IActionResult EditPfp(string id, UserModel usr)
+        public IActionResult EditProfile(string id, UserModel usr)
         {
             if (User.Identity.Name == id)
             {

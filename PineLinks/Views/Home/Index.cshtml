@@ -10,12 +10,12 @@
     <div class="row">
         <div class="col-md-6" style="float:left">
             <center>
-                <img src="/Logo1.png" style="height: 500px; width: 500px">
+                <img src="/Logo2.png" style="height: 500px; width: 500px">
             </center>
 
         </div>
 
-        <div class="col-md-6" style="float: right; padding-top: 6em; color:black">
+        <div class="col-md-6" style="float: left; padding-top: 6em; color:#2f3e46">
             <h1 class="burh" style="font-size:400%; font-family:'Fredoka One'">All your bio links <br /> in one single <br /> place</h1>
             <br />
             <p style="font-size: 150%; font-family: 'Fredoka One'">Register now and create your own link tree</p>
@@ -28,6 +28,9 @@
 <center>
     <div style="padding-top: 2em"> 
         <h2 style="align-content:center">Search for other people's link trees</h2>
+    </div>
+    <div class="form-group">
+        <input class="form-control form-control-lg" type="text" placeholder="search" id="inputLarge">
     </div>
 </center>
 
@@ -54,7 +57,7 @@
                     <div class="card-body">
                         <center>
 
-                        <a class="btn btn-secondary" asp-action="Index" asp-controller="Profile" asp-route-id="@item.Name" style="margin-bottom:20px">Check it out !!</a>
+                        <a class="btn btn-secondary" asp-action="View" asp-controller="Profile" asp-route-id="@item.Name" style="margin-bottom:20px">Check it out !!</a>
                         <br>
                         @if(item.ImageInBytes.Length > 1){
                             var base64 = Convert.ToBase64String(item.ImageInBytes);
@@ -92,7 +95,7 @@
 <style>
     
      body {
-         background-color: #e5f9e0;
+        background-color: #e5f9e0;
      }
 
      label {

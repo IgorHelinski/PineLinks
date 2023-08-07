@@ -60,7 +60,6 @@ namespace PineLinks.Controllers
                 {
                     Name = dr["UserName"].ToString(),
                     ImageInBytes = (byte[])dr["UserPfp"]
-                    //ImageInBytes = Encoding.ASCII.GetBytes(dr["UserPfp"].ToString())
                 }) ;
 
                 while (dr.Read())
@@ -68,7 +67,6 @@ namespace PineLinks.Controllers
                     Users.Add(new UserModel
                     {
                         Name = dr["UserName"].ToString(),
-                        //ImageInBytes = Encoding.ASCII.GetBytes(dr["UserPfp"].ToString())
                         ImageInBytes = (byte[])dr["UserPfp"]
                     });
                 }
@@ -108,7 +106,6 @@ namespace PineLinks.Controllers
             return null;
         }
 
-        [Authorize]
         public IActionResult Privacy()
         {
             return View();
